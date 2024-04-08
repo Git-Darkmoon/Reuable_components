@@ -3,6 +3,7 @@
 import { useForm, SubmitHandler } from "react-hook-form"
 import { userSchema } from "@/validations/userSchema"
 import Button from "./components/Button"
+import Title from "./components/Title"
 import InputBase from "./components/inputs/InputBase"
 import { zodResolver } from "@hookform/resolvers/zod"
 
@@ -13,24 +14,21 @@ function Home() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: zodResolver(userSchema),
   })
 
-  // console.log(errors)
+  // console.table(errors)
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data)
+    console.table(data)
   }
 
   return (
-    <section className="mx-auto max-w-2xl px-6 pt-12">
+    <section className="mx-auto max-w-2xl px-12 md:px-6 pt-14">
       <div>
-        <h1 className="text-4xl font-bold bg-gradient-to-tr from-purply to-indigo-600 bg-clip-text text-transparent mb-5">
-          Subscribe new person
-        </h1>
+        <Title variant="primary">Subscribe new person</Title>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="grid gap-5 md:grid-cols-2"
@@ -64,9 +62,6 @@ function Home() {
         </form>
         <br />
       </div>
-      {/* <div className="max-w-lg text-slate-300/50">
-        {JSON.stringify(watch(), null, 2)}
-      </div> */}
     </section>
   )
 }
