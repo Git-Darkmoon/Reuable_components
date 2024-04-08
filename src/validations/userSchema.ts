@@ -1,16 +1,5 @@
 import { z } from "zod"
 
-const plans = ["free", "basic", "medium", "pro"] as const
-
-export type Plans = (typeof plans)[number]
-
-export const mappedPlans: { [key in Plans]: string } = {
-  basic: "Basic",
-  free: "Free",
-  medium: "Medium",
-  pro: "Pro",
-}
-
 export const userSchema = z
   .object({
     name: z
@@ -18,8 +7,8 @@ export const userSchema = z
       .min(3, {
         message: "Name must be at least 3 characters long",
       })
-      .max(200, {
-        message: "Name must be less than 200 characters long",
+      .max(150, {
+        message: "Name must be less than 150 characters long",
       }),
     email: z.string().email({
       message: "Please enter a valid email",

@@ -1,12 +1,11 @@
 "use client"
 
 import { useForm, SubmitHandler } from "react-hook-form"
-import { userSchema, mappedPlans } from "@/validations/userSchema"
+import { userSchema } from "@/validations/userSchema"
 import Button from "./components/Button"
 import InputBase from "./components/inputs/InputBase"
 import { zodResolver } from "@hookform/resolvers/zod"
 
-import { MdOutlineMailOutline } from "react-icons/md"
 import { Inputs } from "./types"
 import { inputsList } from "./inputList"
 
@@ -20,56 +19,55 @@ function Home() {
     resolver: zodResolver(userSchema),
   })
 
-  const plansOptions = Object.entries(mappedPlans).map(([key, value]) => (
-    <option value={key} key={key}>
-      {value}
-    </option>
-  ))
-
-  console.log(errors)
-  console.log(errors["name"])
-  console.log(errors["password"]?.message)
+  // console.log(errors)
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data)
   }
 
   return (
-    <div className="px-12 pt-12">
-      <h1 className="text-3xl font-bold text-[#c084fc] mb-3">Add person</h1>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col space-y-6 max-w-2xl"
-      >
-        {inputsList.map((input) => {
-          const { id, label, type, placeholder } = input
+    <section className="mx-auto max-w-2xl px-6 pt-12">
+      <div>
+        <h1 className="text-4xl font-bold bg-gradient-to-tr from-purply to-indigo-600 bg-clip-text text-transparent mb-5">
+          Subscribe new person
+        </h1>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="grid gap-5 md:grid-cols-2"
+        >
+          {inputsList.map((input) => {
+            const { id, label, type, placeholder } = input
 
-          return (
-            <div key={id}>
-              <InputBase
-                key={id}
-                id={id}
-                label={label}
-                placeholder={placeholder}
-                type={type}
-                icon={<input.icon />}
-              />
-              {errors[id as keyof Inputs]?.message && (
-                <p className="text-red-500 text-xs pt-1">
-                  {errors[id as keyof Inputs]?.message}
-                </p>
-              )}
-            </div>
-          )
-        })}
+            return (
+              <div key={id}>
+                <InputBase
+                  key={id}
+                  id={id}
+                  label={label}
+                  placeholder={placeholder}
+                  type={type}
+                  icon={<input.icon />}
+                  registerFn={register}
+                />
+                {errors[id as keyof Inputs]?.message && (
+                  <p className="text-red-500 text-xs pt-1">
+                    {errors[id as keyof Inputs]?.message}
+                  </p>
+                )}
+              </div>
+            )
+          })}
 
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </form>
-      <br />
-      {/* <div>{JSON.stringify(watch(), null, 2)}</div> */}
-    </div>
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
+        </form>
+        <br />
+      </div>
+      {/* <div className="max-w-lg text-slate-300/50">
+        {JSON.stringify(watch(), null, 2)}
+      </div> */}
+    </section>
   )
 }
 
